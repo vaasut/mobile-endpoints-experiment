@@ -73,4 +73,9 @@ if params.grafana_password != "":
 if params.enable_novnc:
     all_routes.startVNC()
 
+tour = ig.Tour()
+tour.Description(ig.Tour.MARKDOWN, tourDescription)
+tour.Instructions(ig.Tour.MARKDOWN, tourInstructions)
+request.addTour(tour)
+
 pc.printRequestRSpec(request)

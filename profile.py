@@ -1,0 +1,76 @@
+import geni.portal as portal
+import geni.rspec.igext as ig
+import geni.rspec.pg as pg
+import geni.rspec.emulab as emulab
+import geni.rspec.emulab.route as route
+
+
+tourDescription = """
+### General Mobile Endpoint Profile
+"""
+
+tourInstructions = """
+### Instructions
+"""
+
+COTS_UE_IMG = "urn:publicid:IDN+emulab.net+image+PowderTeam:cots-jammy-image"
+
+pc = portal.Context()
+request = pc.makeRequestRSpec()
+
+pc.defineParameter(
+    "os_image", "Disk Image", portal.ParameterType.STRING,
+    COTS_UE_IMG,
+    longDescription="File system image for the node."
+)
+
+pc.defineParameter(
+    name="enable_novnc",
+    description="enable noVNC",
+    typ=portal.ParameterType.BOOLEAN,
+    defaultValue=True,
+    advanced=True
+)
+
+pc.defineParameter(
+    name="deploy_test_tools",
+    description="Deploy test tools",
+    typ=portal.ParameterType.BOOLEAN,
+    defaultValue=False,
+    advanced=True
+)
+
+pc.defineParameter(
+    name="grafana_host",
+    description="Grafana/Influx Hostname",
+    typ=portal.ParameterType.STRING,
+    defaultValue="",
+    longDescription="Hostname of the Grafana/Influx server",
+    advanced=True
+)
+
+pc.defineParameter(
+    name="grafana_password",
+    description="Grafana/Influx Password",
+    typ=portal.ParameterType.STRING,
+    defaultValue="",
+    longDescription="Grafana/Influx password, which will be encrypted.",
+    advanced=True
+)
+
+params = pc.bindParameters()
+
+all_routes = request.requestAllRoutes()
+all_routes.disk_image = params.os_image
+if params.deploy_test_tools:
+    all_routes.addService(
+        pg.Execute(shell="sh", command="sudo /local/repository/bin/install_test_tools.sh")
+    )
+
+if params.grafana_password != "":
+    request.addResource(ig.EncryptedBlock("Grafana-Password-Encrypted",
+                                          params.grafana_password))
+if params.enable_novnc:
+    all_routes.startVNC()
+
+pc.printRequestRSpec(request)

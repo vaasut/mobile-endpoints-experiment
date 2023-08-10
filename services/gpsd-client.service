@@ -1,0 +1,12 @@
+[Unit]
+Description=GPSD client service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=gpspipe -w control
+
+[Install]
+WantedBy=multi-user.target

@@ -11,8 +11,8 @@ Type=simple
 Restart=always
 RestartSec=1
 ExecStart=/var/tmp/ue_metrics.py
-StandardOutput=/var/tmp/ue-metrics.log
-StandardError=/var/tmp/ue-metrics.log
+StandardOutput=append:/var/log/ue-metrics.log
+StandardError=append:/var/log/ue-metrics.log
 
 
 [Install]

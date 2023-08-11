@@ -64,7 +64,7 @@ all_routes = request.requestAllRoutes()
 all_routes.disk_image = params.os_image
 if params.deploy_test_tools:
     all_routes.addService(
-        pg.Execute(shell="sh", command="sudo /local/repository/bin/install_test_tools.sh")
+        pg.Execute(shell="bash", command="sudo /local/repository/bin/install_test_tools.sh")
     )
 
 if params.grafana_password != "":

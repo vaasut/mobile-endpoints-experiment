@@ -7,13 +7,12 @@ if [ $# -eq 0 ] || [ $# -gt 1 ]; then
     echo "usage: $0 [orch_host]"
     exit 1
 fi
-
 ORCH_HOST=$1
+
 
 echo "Installing test tools"
 
 HOSTNAME=$(hostname -s)
-ORCH_HOST=orch.dense-test.powderteam.emulab.net
 ARCH=$(dpkg --print-architecture)
 PROMTAIL_URL=https://github.com/grafana/loki/releases/download/v2.8.3/promtail_2.8.3_$ARCH.deb
 

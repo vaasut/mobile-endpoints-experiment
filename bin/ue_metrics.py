@@ -5,5 +5,7 @@ import quectel_control
 
 ue_client = quectel_control.QuectelControlClient()
 while True:
-    print(ue_client.servingcell())
+    response = ue_client.servingcell()
+    if "QENG" in response:
+        print(response)
     time.sleep(1)

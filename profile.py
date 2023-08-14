@@ -41,20 +41,11 @@ pc.defineParameter(
 )
 
 pc.defineParameter(
-    name="grafana_host",
-    description="Grafana/Influx Hostname",
+    name="orch_host",
+    description="Orchestrator Hostname",
     typ=portal.ParameterType.STRING,
     defaultValue="",
-    longDescription="Hostname of the Grafana/Influx server",
-    advanced=True
-)
-
-pc.defineParameter(
-    name="grafana_password",
-    description="Grafana/Influx Password",
-    typ=portal.ParameterType.STRING,
-    defaultValue="",
-    longDescription="Grafana/Influx password, which will be encrypted.",
+    longDescription="Hostname of the orch (Grafana/Loki) server",
     advanced=True
 )
 
@@ -64,12 +55,9 @@ all_routes = request.requestAllRoutes()
 all_routes.disk_image = params.os_image
 if params.deploy_test_tools:
     all_routes.addService(
-        pg.Execute(shell="bash", command="sudo /local/repository/bin/install_test_tools.sh")
+        pg.Execute(shell="bash", command="sudo /local/repository/bin/deploy_test_tools.sh {}".format(params.orch_host))
     )
 
-if params.grafana_password != "":
-    request.addResource(ig.EncryptedBlock("Grafana-Password-Encrypted",
-                                          params.grafana_password))
 if params.enable_novnc:
     all_routes.startVNC()
 

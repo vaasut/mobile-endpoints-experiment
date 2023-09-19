@@ -19,6 +19,7 @@ PROMTAIL_URL=https://github.com/grafana/loki/releases/download/v2.8.3/promtail_2
 install_ue_deps () {
     sudo apt update && sudo apt install -y --no-install-recommends \
       gpsd-clients \
+      iperf3 \
       python3-pip \
       python3-zmq
     sudo pip3 install -r $BINDIR/requirements.txt

@@ -19,9 +19,19 @@ pc = portal.Context()
 request = pc.makeRequestRSpec()
 
 pc.defineParameter(
-    "os_image", "Disk Image", portal.ParameterType.STRING,
-    COTS_UE_IMG,
+    name="os_image",
+    description="Disk Image",
+    typ=portal.ParameterType.STRING,
+    defaultValue=COTS_UE_IMG,
     longDescription="File system image for the node."
+)
+
+pc.defineParameter(
+    name="dnn",
+    description="DNN/APN to connect to",
+    typ=portal.ParameterType.STRING,
+    defaultValue="internet",
+    longDescription="DNN/APN that the connection manager will select for the UE."
 )
 
 pc.defineParameter(
@@ -57,6 +67,10 @@ if params.deploy_test_tools:
     all_routes.addService(
         pg.Execute(shell="bash", command="sudo /local/repository/bin/deploy_test_tools.sh {}".format(params.orch_host))
     )
+
+all_routes.addService(
+    pg.Execute(shell="bash", command="sudo /local/repository/bin/setup_cots_ue.sh {}".format(params.dnn))
+)
 
 if params.enable_novnc:
     all_routes.startVNC()

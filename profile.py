@@ -19,11 +19,18 @@ pc = portal.Context()
 request = pc.makeRequestRSpec()
 
 pc.defineParameter(
-    name="os_image",
-    description="Disk Image",
+    name="deploy_test_tools",
+    description="Deploy logging utility (Promtail)) and some other useful UE tools.",
+    typ=portal.ParameterType.BOOLEAN,
+    defaultValue=True
+)
+
+pc.defineParameter(
+    name="orch_host",
+    description="Orchestrator Hostname",
     typ=portal.ParameterType.STRING,
-    defaultValue=COTS_UE_IMG,
-    longDescription="File system image for the node."
+    defaultValue="",
+    longDescription="Hostname of the orch (Grafana/Loki) server. Required if deploy_test_tools is enabled.",
 )
 
 pc.defineParameter(
@@ -36,26 +43,18 @@ pc.defineParameter(
 
 pc.defineParameter(
     name="enable_novnc",
-    description="enable noVNC",
+    description="Enable noVNC on each mobile endpoint.",
     typ=portal.ParameterType.BOOLEAN,
     defaultValue=True,
     advanced=True
 )
 
 pc.defineParameter(
-    name="deploy_test_tools",
-    description="Deploy test tools",
-    typ=portal.ParameterType.BOOLEAN,
-    defaultValue=False,
-    advanced=True
-)
-
-pc.defineParameter(
-    name="orch_host",
-    description="Orchestrator Hostname",
+    name="os_image",
+    description="Disk Image",
     typ=portal.ParameterType.STRING,
-    defaultValue="",
-    longDescription="Hostname of the orch (Grafana/Loki) server",
+    defaultValue=COTS_UE_IMG,
+    longDescription="File system image for the node.",
     advanced=True
 )
 

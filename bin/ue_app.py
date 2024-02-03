@@ -16,7 +16,7 @@ class UEApp(App):
         ("s", "servingcell", "Serving cell"),
         ("i", "imsi", "IMSI"),
         ("h", "hello", "Check zmq connection"),
-        ("c", "scan", "Check zmq connection"),
+        # ("c", "scan", "Check zmq connection"),
     ]
 
     def __init__(self, server=None, **kwargs):

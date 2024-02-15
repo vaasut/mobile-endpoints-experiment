@@ -6,7 +6,26 @@ import geni.rspec.emulab.route as route
 
 
 tourDescription = """
-### General Mobile Endpoint Profile
+### Mobile Endpoints for LTE/5G Experiments
+
+POWDER provides a number of mobile endpoints deployed to university campus shuttles. In addition to other tools and SDRs, these mobile endpoints are equipped with LTE/5G modems that are capable of attaching to networks that include gNodeBs running at POWDER Dense Deployment sites.
+
+This profile instantiates an exeriment that includes all of the currently available mobile endpoints traversing routes that come near one or more Dense Deployment sites. It is primarily intended to be run in conjunction with one of our outdoor 5G profiles:
+
+- [OAI Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/oai-outdoor-ota)
+- [srsRAN Project Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/srs-outdoor-ota)
+
+You'll need to instantiate one of these, or something similar, before you instantiate this profile if you want the UEs to attach to a 5G network. In fact, in its default configuration, this profile will expect you to provide an `Orchestrator Hostname` in order to point a logging utility at an orchestration node deployed along with the rest of the resources in both of the outdoor 5G profiles. This hostname is provided in the instructions in the web UI of the outoor OAI or srsRAN experiment. (You can use this profile to deploy the mobile endpoints for other purposes too, of course.)
+
+By default this profile installs and configures Promtail on each mobile endpoint to send logs to a Loki server running on the orchestrator. You can disable this feature if you don't need it. It installs some other useful tools in the for of system services:
+
+- `quectel-cm.service`: a connection manager that will attach the modem to the network and select a DNN/APN to connect to.
+- `quectel-control.service`: mutiplexes communications to the serial interface of the UE in order to all multiple processes to talk to the modem's AT interface.
+- `ue-metrics.service`: collects and send metrics to the orchestrator while the UE has a PDU session.
+- `gpsd-client.service`: provides location information to the orchestrator.
+
+Finally, it includes a terminal user interface (TUI) for the UE that allows a minimal set of commands to be sent to the modem via pressing keys on the keyboard. This is useful for debugging and for providing a way to interact with the modem without needing to use a serial console.
+
 """
 
 tourInstructions = """
@@ -20,7 +39,7 @@ request = pc.makeRequestRSpec()
 
 pc.defineParameter(
     name="deploy_test_tools",
-    description="Deploy logging utility (Promtail)) and some other useful UE tools.",
+    description="Deploy logging utility (Promtail) and some other useful UE tools.",
     typ=portal.ParameterType.BOOLEAN,
     defaultValue=True
 )

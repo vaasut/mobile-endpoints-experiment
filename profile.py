@@ -26,10 +26,32 @@ By default this profile installs and configures Promtail on each mobile endpoint
 
 Finally, it includes a terminal user interface (TUI) for the UE that allows a minimal set of commands to be sent to the modem via pressing keys on the keyboard. This is useful for debugging and for providing a way to interact with the modem without needing to use a serial console.
 
+Note that mobile endpoints are ephemeral! Campus shuttles may come on route or go off route at any time. For this reason, the services listed above are started automatically. This way, if a new shuttle comes online, it will automatically start attaching to the network and start sending logs to the orchestrator. When a shuttle goes off route, the mobile endpoint will be terminated and the services will be stopped. We designed this profile to serve as a starting point with examples for pushing logs to an orchestrator in realtime so that data is not lost when the mobile endpoints are terminated.
+
 """
 
 tourInstructions = """
 ### Instructions
+
+1. **Start an Outdoor 5G Experiment**: Before you instantiate this profile, you should start an outdoor 5G experiment. You can use one of the following profiles:
+
+- [OAI Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/oai-outdoor-ota)
+- [srsRAN Project Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/srs-outdoor-ota)
+
+2. **Provide Orchestrator Hostname**: If you are using the default configuration, you will need to provide the hostname of the orchestrator that is running Loki. You can find this hostname in the web UI of the outdoor 5G experiment you just started.
+
+3. **Set DNN**: You can set the DNN/APN that the connection manager will select for the UE. The default is `internet`, which corresponds to the default settings in the outdoor 5G profiles.
+
+After that, as mobile endpoints come online, they will start attaching to the network and sending logs to the orchestrator, which you can explore using the corresponding Grafana server.
+
+You can use the TUI to interact with the modem by running `/var/tmp/ue_app.py`. It provides an easy way to send the following commands to the modem:
+
+- `A`: turn on airplane mode
+- `U`: turn off airplane mode or turn on modem
+- `D`: turn off modem
+- `I`: check IMSI
+- `S`: check serving cell metrics
+
 """
 
 COTS_UE_IMG = "urn:publicid:IDN+emulab.net+image+PowderTeam:cots-jammy-image"

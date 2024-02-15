@@ -15,7 +15,7 @@ This profile instantiates an exeriment that includes all of the currently availa
 - [OAI Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/oai-outdoor-ota)
 - [srsRAN Project Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/srs-outdoor-ota)
 
-You'll need to instantiate one of these, or something similar, before you instantiate this profile if you want the UEs to attach to a 5G network. In fact, in its default configuration, this profile will expect you to provide an `Orchestrator Hostname` in order to point a logging utility at an orchestration node deployed along with the rest of the resources in both of the outdoor 5G profiles. This hostname is provided in the instructions in the web UI of the outoor OAI or srsRAN experiment. (You can use this profile to deploy the mobile endpoints for other purposes too, of course.)
+**You'll need to instantiate one of these, or something similar, before you instantiate this profile if you want the UEs to attach to a 5G network.** In fact, in its default configuration, this profile will expect you to provide an `Orchestrator Hostname` in order to point a logging utility at an orchestration node deployed along with the rest of the resources in both of the outdoor 5G profiles. This hostname is provided in the instructions in the web UI of the outoor OAI or srsRAN experiment. (You can use this profile to deploy the mobile endpoints for other purposes too, of course.)
 
 By default this profile installs and configures Promtail on each mobile endpoint to send logs to a Loki server running on the orchestrator. You can disable this feature if you don't need it. It installs some other useful tools in the for of system services:
 

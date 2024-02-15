@@ -12,8 +12,8 @@ POWDER provides a number of mobile endpoints deployed to university campus shutt
 
 This profile instantiates an exeriment that includes all of the currently available mobile endpoints traversing routes that come near one or more Dense Deployment sites. It is primarily intended to be run in conjunction with one of our outdoor 5G profiles:
 
-    - [OAI Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/oai-outdoor-ota)
-    - [srsRAN Project Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/srs-outdoor-ota)
+- [OAI Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/oai-outdoor-ota)
+- [srsRAN Project Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/srs-outdoor-ota)
 
 You'll need to instantiate one of these, or something similar, before you instantiate this profile if you want the UEs to attach to a 5G network. In fact, in its default configuration, this profile will expect you to provide an `Orchestrator Hostname` in order to point a logging utility at an orchestration node deployed along with the rest of the resources in both of the outdoor 5G profiles. This hostname is provided in the instructions in the web UI of the outoor OAI or srsRAN experiment. (You can use this profile to deploy the mobile endpoints for other purposes too, of course.)
 
@@ -33,10 +33,7 @@ Note that mobile endpoints are ephemeral! Campus shuttles may come on route or g
 tourInstructions = """
 ### Instructions
 
-1. **Start an Outdoor 5G Experiment**: Before you instantiate this profile, you should start an outdoor 5G experiment. You can use one of the following profiles:
-
-- [OAI Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/oai-outdoor-ota)
-- [srsRAN Project Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/srs-outdoor-ota)
+1. **Start an Outdoor 5G Experiment**: Before you instantiate this profile, you should start an outdoor 5G experiment. You can use one of the following profiles: [OAI Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/oai-outdoor-ota) or [srsRAN Project Outdoor 5G](https://www.powderwireless.net/show/PowderTeam/srs-outdoor-ota).
 
 2. **Provide Orchestrator Hostname**: If you are using the default configuration, you will need to provide the hostname of the orchestrator that is running Loki. You can find this hostname in the web UI of the outdoor 5G experiment you just started.
 

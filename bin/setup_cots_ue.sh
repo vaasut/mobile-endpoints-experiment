@@ -11,6 +11,12 @@ DNN=$1
 
 echo "Configuring UE for DNN $DNN"
 
+maybe_add_quectel_cm () {
+    if ! test -f /etc/systemd/system/quectel-cm.service; then
+        sudo cp $SERVICESDIR/quectel-cm.service /etc/systemd/system/quectel-cm.service
+    fi
+}
+
 update_quectel_cm () {
     sudo sed -i "s/internet/$DNN/" /etc/systemd/system/quectel-cm.service
     sudo systemctl daemon-reload
@@ -22,5 +28,6 @@ update_udhcpc_script () {
     sudo chmod +x /etc/udhcpc/default.script
 }
 
+maybe_add_quectel_cm
 update_quectel_cm
 update_udhcpc_script

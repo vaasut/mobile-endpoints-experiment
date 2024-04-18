@@ -28,6 +28,11 @@ update_udhcpc_script () {
     sudo chmod +x /etc/udhcpc/default.script
 }
 
+install_iperf3 () {
+    sudo apt install -y iperf3
+}
+
 maybe_add_quectel_cm
 update_quectel_cm
 update_udhcpc_script
+install_iperf3

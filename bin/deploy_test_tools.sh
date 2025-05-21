@@ -3,25 +3,14 @@ set -ex
 BINDIR=`dirname $0`
 source $BINDIR/common.sh
 
-if [ $# -eq 0 ] || [ $# -gt 1 ]; then
-    echo "usage: $0 [orch_host]"
-    exit 1
-fi
-ORCH_HOST=$1
 
 
 echo "Installing test tools"
 
-HOSTNAME=$(hostname -s)
-ARCH=$(dpkg --print-architecture)
-PROMTAIL_URL=https://github.com/grafana/loki/releases/download/v2.8.3/promtail_2.8.3_$ARCH.deb
-
 install_ue_deps () {
     sudo apt update && sudo apt install -y --no-install-recommends \
       gpsd-clients \
-      iperf3 \
-      python3-pip \
-      python3-zmq
+      python3-pip
     sudo pip3 install -r $BINDIR/requirements.txt
 }
 
@@ -38,18 +27,6 @@ install_ue_services () {
       sudo systemctl restart $(basename $service)
   done
 }
-
-install_promtail () {
-    curl -L -o /tmp/promtail.deb "$PROMTAIL_URL"
-    sudo dpkg --force-confold -i /tmp/promtail.deb
-}
-
-setup_promtail () {
-    cat <<EOF > /tmp/promtail-config.yml
-# Created on $(date)
-server:
-  http_listen_port: 9080
-  grpc_listen_port: 0
 
 positions:
   filename: /tmp/positions.yaml
@@ -86,15 +63,5 @@ EOF
     sudo cp /tmp/promtail-config.yml /etc/promtail/config.yml
 }
 
-start_promtail () {
-    sudo systemctl daemon-reload
-    sudo systemctl enable promtail
-    sudo systemctl restart promtail
-}
-
-
 install_ue_deps
 install_ue_services
-install_promtail
-setup_promtail
-start_promtail
